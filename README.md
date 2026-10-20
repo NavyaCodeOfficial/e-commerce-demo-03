@@ -1,4 +1,4 @@
-# KHK Fashion Store (static storefront)
+# Navya Fashion Store (static storefront)
 
 Plain HTML, CSS and vanilla JavaScript. No backend, no payments. Orders and enquiries open a prefilled WhatsApp chat; the store confirms every order itself.
 

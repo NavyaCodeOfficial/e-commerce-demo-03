@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Static page generator for KHK Fashion Store.
+"""Static page generator for Navya Fashion Store.
 
 Run:  SITE_URL=https://your-domain.com python3 build.py
 It writes all HTML pages, sitemap.xml, robots.txt and placeholder SVG images.
@@ -10,8 +10,8 @@ import os, re, json, datetime, pathlib
 
 ROOT = pathlib.Path(__file__).parent
 SITE = os.environ.get("SITE_URL", "https://www.example.com").rstrip("/")
-NAME = "KHK Fashion Store"
-IG = "https://www.instagram.com/khk_fashionstore/"
+NAME = "Navya Fashion Store"
+IG = "https://www.instagram.com/navyacode/"
 STAGING = os.environ.get("STAGING") == "1"
 TODO = lambda t: '<span class="todo">[TO BE CONFIRMED BY STORE OWNER: %s]</span>' % t
 
@@ -33,7 +33,7 @@ for name, body, label in (("watch", WATCH, "Placeholder watch illustration"), ("
     for i, t in enumerate(TINTS, 1):
         write("assets/images/%s-%d.svg" % (name, i), svg(t, body, label))
 write("assets/images/hero-placeholder.svg", svg("#F0F0ED", WATCH.replace('r="190"', 'r="230"'), "Placeholder campaign image"))
-write("assets/images/og-placeholder.svg", svg("#F0F0ED", WATCH, "KHK Fashion Store"))
+write("assets/images/og-placeholder.svg", svg("#F0F0ED", WATCH, "Navya Fashion Store"))
 
 # ---------- shared layout ----------
 ICON = lambda p: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">%s</svg>' % p
@@ -44,7 +44,7 @@ def header(active):
     return ('<a class="skip" href="#main">Skip to content</a>'
         '<div class="announce"><p id="announce-text">Order requests are confirmed by the store on WhatsApp.</p></div>'
         '<header class="site-header"><div class="container header-in">'
-        '<a class="wordmark" href="index.html" aria-label="KHK Fashion Store home">KHK <span>Fashion Store</span></a>'
+        '<a class="wordmark" href="index.html" aria-label="Navya Fashion Store home">Navya <span>Fashion Store</span></a>'
         '<nav id="site-nav" class="nav" aria-label="Main">%s</nav>'
         '<a class="icon-btn" href="shop.html?focus=search" aria-label="Search products">%s</a>'
         '<a class="icon-btn" href="cart.html" aria-label="Shopping bag">%s<span class="badge" data-cart-count hidden>0</span></a>'
@@ -55,11 +55,11 @@ def header(active):
         ICON('<path d="M4 7h16M4 12h16M4 17h16"/>'))
 
 FOOTER = ('<footer class="site-footer"><div class="container"><div class="foot-grid">'
-    '<div><h2>KHK Fashion Store</h2><p class="muted">Browse the collection and send your order request through WhatsApp.</p></div>'
+    '<div><h2>Navya Fashion Store</h2><p class="muted">Browse the collection and send your order request through WhatsApp.</p></div>'
     '<nav aria-label="Footer"><h2>Explore</h2><ul><li><a href="shop.html">Shop</a></li><li><a href="collections.html">Collections</a></li><li><a href="about.html">About</a></li><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact</a></li></ul></nav>'
     '<nav aria-label="Policies"><h2>Policies</h2><ul><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms-and-conditions.html">Terms and Conditions</a></li><li><a href="shipping-policy.html">Shipping Policy</a></li><li><a href="return-refund-policy.html">Return &amp; Refund Policy</a></li><li><a href="sitemap.xml">Sitemap</a></li></ul></nav>'
     '<div><h2>Connect</h2><ul><li><a href="#" data-wa-chat>Chat on WhatsApp</a></li><li><a href="' + IG + '" target="_blank" rel="noopener noreferrer">Instagram</a></li></ul></div>'
-    '</div><p class="copy">&copy; <span data-year>2026</span> KHK Fashion Store. All rights reserved.</p></div></footer>')
+    '</div><p class="copy">&copy; <span data-year>2026</span> Navya Fashion Store. All rights reserved.</p></div></footer>')
 
 ORG = {"@context": "https://schema.org", "@type": "Organization", "name": NAME, "url": SITE + "/", "sameAs": [IG]}  # only verified facts
 def website():
@@ -96,27 +96,27 @@ def head(h1, lead=""):
     return '<div class="container page-head"><h1>%s</h1>%s</div>' % (h1, ('<p class="muted">%s</p>' % lead) if lead else "")
 
 # ---------- pages ----------
-home = ('<section class="hero"><div class="container hero-in"><div><p class="eyebrow">KHK Fashion Store</p><h1>Style That Speaks.</h1>'
+home = ('<section class="hero"><div class="container hero-in"><div><p class="eyebrow">Navya Fashion Store</p><h1>Style That Speaks.</h1>'
     '<p class="lead">Discover fashion that fits your style. Explore the collection and order directly through WhatsApp.</p>'
     '<div class="btn-row"><a class="btn" href="shop.html">Shop Collection</a><a class="btn btn-wa" href="#" data-wa-chat>Enquire on WhatsApp</a></div></div>'
-    '<div class="hero-img"><img src="assets/images/hero-placeholder.svg" alt="Placeholder campaign image for the KHK Fashion Store collection" width="800" height="1000" fetchpriority="high"></div></div></section>'
+    '<div class="hero-img"><img src="assets/images/hero-placeholder.svg" alt="Placeholder campaign image for the Navya Fashion Store collection" width="800" height="1000" fetchpriority="high"></div></div></section>'
     + SAMPLE +
     '<section class="section" aria-labelledby="h-col"><div class="container"><div class="section-head"><h2 id="h-col">Featured Collections</h2><a class="link" href="collections.html">All collections</a></div><div class="grid-3">'
     + "".join('<a class="card cat-card" href="shop.html?category=%s"><div class="card-media"><img src="assets/images/%s-1.svg" alt="" width="800" height="1000" loading="lazy"></div><div class="card-body"><h3>%s</h3><p class="muted small" data-count-cat="%s"></p></div></a>' % (i, im, n, i)
               for i, im, n in (("watches", "watch", "Watches"), ("sunglasses", "sunglasses", "Sunglasses"), ("bags", "bag", "Bags")))
     + '</div></div></section>'
     '<section class="section alt" aria-labelledby="h-feat"><div class="container"><div class="section-head"><h2 id="h-feat">Featured Products</h2><a class="link" href="shop.html">View all products</a></div><div class="grid" id="featured-grid"></div><noscript><p>Please enable JavaScript to see products, or <a href="shop.html">visit the shop</a>.</p></noscript></div></section>'
-    '<section class="section" aria-labelledby="h-intro"><div class="container prose"><h2 id="h-intro">About KHK Fashion Store</h2><p>KHK Fashion Store shares its collection on Instagram and takes order requests directly. This website makes it easier to browse items and send an organised order message. ' + TODO("replace with your own brand introduction") + '</p><a class="link" href="about.html">Read more</a></div></section>'
+    '<section class="section" aria-labelledby="h-intro"><div class="container prose"><h2 id="h-intro">About Navya Fashion Store</h2><p>Navya Fashion Store shares its collection on Instagram and takes order requests directly. This website makes it easier to browse items and send an organised order message. ' + TODO("replace with your own brand introduction") + '</p><a class="link" href="about.html">Read more</a></div></section>'
     '<section class="section alt" aria-labelledby="h-why"><div class="container"><h2 id="h-why">Why Shop With Us</h2><div class="grid-3">'
     '<div class="card feature"><h3>Easy Ordering</h3><p class="muted">Pick your items and send the order request in one tap.</p></div>'
     '<div class="card feature"><h3>Personal Assistance</h3><p class="muted">Ask questions about any product directly on WhatsApp.</p></div>'
     '<div class="card feature"><h3>Simple Shopping</h3><p class="muted">Browse, filter and compare products without creating an account.</p></div></div></div></section>'
     '<section class="section" aria-labelledby="h-ig"><div class="container"><div class="ig"><h2 id="h-ig">Follow Us on Instagram</h2><p class="muted">See new arrivals and updates on our official profile.</p>'
     '<div class="ig-grid">' + "".join('<img src="assets/images/%s-%d.svg" alt="" width="800" height="1000" loading="lazy">' % x for x in (("watch", 2), ("sunglasses", 2), ("bag", 2))) +
-    '</div><a class="btn" href="' + IG + '" target="_blank" rel="noopener noreferrer">@khk_fashionstore on Instagram</a></div></div></section>'
+    '</div><a class="btn" href="' + IG + '" target="_blank" rel="noopener noreferrer">@Navya_fashionstore on Instagram</a></div></div></section>'
     '<section class="section cta"><div class="container"><h2>Found Your Style?</h2><div class="btn-row" style="justify-content:center"><a class="btn" href="shop.html">Explore Collection</a><a class="btn btn-wa" href="#" data-wa-chat>Chat With Us</a></div></div></section>')
-page("index.html", "KHK Fashion Store | Explore the Latest Fashion Collection",
-     "Explore the KHK Fashion Store collection, discover your style, and enquire or order conveniently through WhatsApp.", home, "index.html", [ORG, website()])
+page("index.html", "Navya Fashion Store | Explore the Latest Fashion Collection",
+     "Explore the Navya Fashion Store collection, discover your style, and enquire or order conveniently through WhatsApp.", home, "index.html", [ORG, website()])
 
 shop = (crumbs(("Shop", None)) + head("Shop the Collection", "Search and filter the full range.") + SAMPLE +
     '<section class="section" style="padding-top:0"><div class="container"><button id="filter-toggle" class="btn btn-ghost btn-sm" type="button" aria-expanded="false" aria-controls="filters">Filters &amp; Sort</button>'
@@ -126,7 +126,7 @@ shop = (crumbs(("Shop", None)) + head("Shop the Collection", "Search and filter 
     '<p style="margin-top:16px"><button id="f-clear" class="btn btn-ghost btn-sm" type="button">Clear filters</button></p></aside>'
     '<div><div class="result-bar"><span id="result-count" class="muted" aria-live="polite"></span></div><div class="grid" id="shop-grid" style="grid-template-columns:repeat(auto-fill,minmax(210px,1fr))"></div>'
     '<div id="empty-state" class="empty" hidden><h2>No products found</h2><p class="muted">Try a different search or clear the filters.</p></div></div></div></div></section>')
-page("shop.html", "Shop | KHK Fashion Store", "Browse the KHK Fashion Store collection. Search, filter and sort products, then order on WhatsApp.", shop, "shop.html",
+page("shop.html", "Shop | Navya Fashion Store", "Browse the Navya Fashion Store collection. Search, filter and sort products, then order on WhatsApp.", shop, "shop.html",
      [crumb_ld([("Home", ""), ("Shop", "shop.html")])], scripts=("config", "products", "app", "cart", "whatsapp", "shop"))
 
 prod = ('<div class="container">' + '<nav id="crumbs" class="crumbs" aria-label="Breadcrumb"></nav>' + '<div id="product-root" class="pd"><p class="muted">Loading product&hellip;</p></div>'
@@ -146,23 +146,23 @@ def form_fields(prefix):
         '<p class="warn" data-setup-warning hidden role="alert">Setup needed: add the store WhatsApp number in js/config.js.</p>'
         '<button class="btn btn-wa" type="submit">Continue to WhatsApp</button>')
 
-page("product.html", "Product | KHK Fashion Store", "View product details at KHK Fashion Store and order or ask a question on WhatsApp.", prod.replace("{FORM_FIELDS}", form_fields("pq")), "shop.html",
+page("product.html", "Product | Navya Fashion Store", "View product details at Navya Fashion Store and order or ask a question on WhatsApp.", prod.replace("{FORM_FIELDS}", form_fields("pq")), "shop.html",
      scripts=("config", "products", "app", "cart", "whatsapp", "product", "seo"), data_page="product")
 
 cols = (crumbs(("Collections", None)) + head("Collections", "Browse by category.") + SAMPLE + '<div id="collection-products"></div>')
-page("collections.html", "Collections | KHK Fashion Store", "Browse KHK Fashion Store collections by category and find your next favourite piece.", cols, "collections.html",
+page("collections.html", "Collections | Navya Fashion Store", "Browse Navya Fashion Store collections by category and find your next favourite piece.", cols, "collections.html",
      [crumb_ld([("Home", ""), ("Collections", "collections.html")])])
 
-about = (crumbs(("About", None)) + head("About KHK Fashion Store") + '<div class="container prose"><p>KHK Fashion Store is an India-based fashion seller that shares its collection on <a href="' + IG + '" target="_blank" rel="noopener noreferrer">Instagram</a> and handles order requests directly with customers.</p>'
+about = (crumbs(("About", None)) + head("About Navya Fashion Store") + '<div class="container prose"><p>Navya Fashion Store is an India-based fashion seller that shares its collection on <a href="' + IG + '" target="_blank" rel="noopener noreferrer">Instagram</a> and handles order requests directly with customers.</p>'
     '<p>' + TODO("add your brand story, founding year and what makes your products special") + '</p><h2>How ordering works</h2><ol><li>Browse the shop and choose your items.</li><li>Send your order request on WhatsApp from a product page or the cart.</li><li>The store replies to confirm availability, delivery charges and the final total.</li></ol>'
     '<p>An order is only confirmed once the store confirms it to you.</p><a class="btn" href="shop.html">Shop the Collection</a></div>')
-page("about.html", "About | KHK Fashion Store", "Learn about KHK Fashion Store and how ordering through WhatsApp works.", about, "about.html", [crumb_ld([("Home", ""), ("About", "about.html")])])
+page("about.html", "About | Navya Fashion Store", "Learn about Navya Fashion Store and how ordering through WhatsApp works.", about, "about.html", [crumb_ld([("Home", ""), ("About", "about.html")])])
 
 contact = (crumbs(("Contact", None)) + head("Contact Us", "Send an enquiry and continue the chat on WhatsApp.") +
-    '<div class="container contact-grid" style="padding-bottom:60px"><div class="prose"><h2>Get in touch</h2><ul><li>WhatsApp: <a href="#" data-wa-chat>Start a chat</a></li><li>Instagram: <a href="' + IG + '" target="_blank" rel="noopener noreferrer">@khk_fashionstore</a></li><li>Address: ' + TODO("add only if you want it public") + '</li><li>Business hours: ' + TODO("add hours") + '</li></ul></div>'
+    '<div class="container contact-grid" style="padding-bottom:60px"><div class="prose"><h2>Get in touch</h2><ul><li>WhatsApp: <a href="#" data-wa-chat>Start a chat</a></li><li>Instagram: <a href="' + IG + '" target="_blank" rel="noopener noreferrer">@Navya_fashionstore</a></li><li>Address: ' + TODO("add only if you want it public") + '</li><li>Business hours: ' + TODO("add hours") + '</li></ul></div>'
     '<form class="card form-card" data-enquiry novalidate aria-labelledby="h-form"><h2 id="h-form">WhatsApp Enquiry</h2>' + form_fields("ct") +
     '<p class="muted small" style="margin-top:12px">Submitting opens WhatsApp with your message prefilled. Nothing is sent or saved by this website; the chat is handled by WhatsApp.</p></form></div>')
-page("contact.html", "Contact | KHK Fashion Store", "Contact KHK Fashion Store. Send an enquiry that opens a prefilled WhatsApp chat.", contact, "contact.html", [crumb_ld([("Home", ""), ("Contact", "contact.html")])])
+page("contact.html", "Contact | Navya Fashion Store", "Contact Navya Fashion Store. Send an enquiry that opens a prefilled WhatsApp chat.", contact, "contact.html", [crumb_ld([("Home", ""), ("Contact", "contact.html")])])
 
 faqs = [("How do I place an order?", "Choose a product, select your options and tap Order on WhatsApp, or add items to the cart and use Proceed to WhatsApp Order. The store then confirms your order on WhatsApp."),
     ("Is my order confirmed when WhatsApp opens?", "No. Opening WhatsApp only sends a request. The order is confirmed when the store replies and confirms it."),
@@ -171,13 +171,13 @@ faqs = [("How do I place an order?", "Choose a product, select your options and 
     ("Can I return or exchange an item?", "See the <a href=\"return-refund-policy.html\">Return &amp; Refund Policy</a>.")]
 faq = (crumbs(("FAQ", None)) + head("Frequently Asked Questions") + '<div class="container prose" style="padding-bottom:60px">' + "".join("<details><summary>%s</summary><p>%s</p></details>" % f for f in faqs) + "</div>")
 faq_ld = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": re.sub(r"<[^>]+>", "", a.replace("&amp;", "&"))}} for q, a in faqs[:3]]}
-page("faq.html", "FAQ | KHK Fashion Store", "Answers to common questions about ordering, payment, delivery and returns at KHK Fashion Store.", faq, "", [faq_ld, crumb_ld([("Home", ""), ("FAQ", "faq.html")])])
+page("faq.html", "FAQ | Navya Fashion Store", "Answers to common questions about ordering, payment, delivery and returns at Navya Fashion Store.", faq, "", [faq_ld, crumb_ld([("Home", ""), ("FAQ", "faq.html")])])
 
 def legal(file, title, desc, h1, sections):
     body = crumbs((h1, None)) + head(h1, "Last updated: " + TODO("date") + ". Draft template, to be reviewed and completed by the store owner before launch.") + '<div class="container prose" style="padding-bottom:60px">' + "".join("<h2>%s</h2>%s" % s for s in sections) + "</div>"
     page(file, title, desc, body, "", [crumb_ld([("Home", ""), (h1, file)])])
 
-legal("privacy-policy.html", "Privacy Policy | KHK Fashion Store", "How the KHK Fashion Store website handles information entered in forms, local storage and WhatsApp.", "Privacy Policy", [
+legal("privacy-policy.html", "Privacy Policy | Navya Fashion Store", "How the Navya Fashion Store website handles information entered in forms, local storage and WhatsApp.", "Privacy Policy", [
     ("Information you enter", "<p>The enquiry form asks for your name, an optional phone number, an enquiry type, an optional product reference and your message. This website has no server: it does not send, receive or store these details. They are placed into a WhatsApp message that you choose to send.</p>"),
     ("Local storage", "<p>Your cart (product, option and quantity only) is stored in your browser using localStorage so it persists between visits. It stays on your device and you can clear it from the cart page or your browser settings. No payment details are collected.</p>"),
     ("WhatsApp", "<p>When you continue to WhatsApp, your message is handled by WhatsApp under its own terms and privacy policy. Messages you send are then received by the store.</p>"),
@@ -185,7 +185,7 @@ legal("privacy-policy.html", "Privacy Policy | KHK Fashion Store", "How the KHK 
     ("How the store uses your messages", "<p>" + TODO("explain how the store uses details you send on WhatsApp, such as for order fulfilment and delivery") + "</p>"),
     ("Retention and your rights", "<p>" + TODO("retention period and how customers can request correction or deletion of their details") + "</p>"),
     ("Contact", "<p>" + TODO("privacy contact details") + "</p>")])
-legal("terms-and-conditions.html", "Terms and Conditions | KHK Fashion Store", "Terms for using the KHK Fashion Store website and placing order requests through WhatsApp.", "Terms and Conditions", [
+legal("terms-and-conditions.html", "Terms and Conditions | Navya Fashion Store", "Terms for using the Navya Fashion Store website and placing order requests through WhatsApp.", "Terms and Conditions", [
     ("Website use", "<p>This website is provided to browse products and prepare order requests. Please use it lawfully.</p>"),
     ("Products, pricing and availability", "<p>Descriptions, images and prices are provided in good faith and may change or contain errors. Availability is confirmed by the store when you place a request.</p>"),
     ("Orders", "<p>Adding items to the cart or opening WhatsApp does not create a confirmed order. An order is confirmed only when the store confirms it to you, including the final total and delivery charges.</p>"),
@@ -193,18 +193,18 @@ legal("terms-and-conditions.html", "Terms and Conditions | KHK Fashion Store", "
     ("Shipping, cancellation and returns", "<p>See the <a href=\"shipping-policy.html\">Shipping Policy</a> and <a href=\"return-refund-policy.html\">Return &amp; Refund Policy</a>. " + TODO("cancellation terms") + "</p>"),
     ("Intellectual property", "<p>Website content belongs to the store or its licensors. Third-party names and marks belong to their respective owners. " + TODO("confirm you have rights to all images and names used") + "</p>"),
     ("Limitation and contact", "<p>" + TODO("limitation of liability wording (consider legal advice) and contact details") + "</p>")])
-legal("shipping-policy.html", "Shipping Policy | KHK Fashion Store", "Shipping and delivery information for KHK Fashion Store orders.", "Shipping Policy", [
+legal("shipping-policy.html", "Shipping Policy | Navya Fashion Store", "Shipping and delivery information for Navya Fashion Store orders.", "Shipping Policy", [
     ("Delivery areas", "<p>" + TODO("areas you deliver to") + "</p>"), ("Dispatch time", "<p>" + TODO("estimated dispatch time") + "</p>"),
     ("Delivery estimate", "<p>" + TODO("estimated delivery time") + "</p>"), ("Shipping charges", "<p>" + TODO("charges, or how they are confirmed on WhatsApp") + "</p>"),
     ("Tracking", "<p>" + TODO("whether tracking is provided and how it is shared") + "</p>")])
-legal("return-refund-policy.html", "Return & Refund Policy | KHK Fashion Store", "Returns, exchanges, cancellations and refunds at KHK Fashion Store.", "Return & Refund Policy", [
+legal("return-refund-policy.html", "Return & Refund Policy | Navya Fashion Store", "Returns, exchanges, cancellations and refunds at Navya Fashion Store.", "Return & Refund Policy", [
     ("Eligible returns and exchanges", "<p>" + TODO("what can be returned or exchanged and within how many days") + "</p>"), ("Damaged or incorrect items", "<p>" + TODO("process and evidence required") + "</p>"),
     ("Cancellations", "<p>" + TODO("when an order can be cancelled") + "</p>"), ("Refund processing", "<p>" + TODO("refund method and timeline") + "</p>"),
     ("How to contact us", "<p>Message the store on <a href=\"#\" data-wa-chat>WhatsApp</a> with your order details.</p>")])
 
-page("cart.html", "Your Cart | KHK Fashion Store", "Review your cart and send your order request on WhatsApp.",
+page("cart.html", "Your Cart | Navya Fashion Store", "Review your cart and send your order request on WhatsApp.",
      crumbs(("Cart", None)) + head("Your Cart", "A shopping aid. The store confirms your final order and total on WhatsApp.") + '<div class="container" style="padding-bottom:60px"><div id="cart-root"></div></div>', noindex=True)
-page("404.html", "Page Not Found | KHK Fashion Store", "The page you requested could not be found.",
+page("404.html", "Page Not Found | Navya Fashion Store", "The page you requested could not be found.",
      '<div class="container empty" style="padding:80px 16px"><h1>Page not found</h1><p class="muted">The page may have moved or the link is incorrect.</p><div class="btn-row" style="justify-content:center"><a class="btn" href="index.html">Go Home</a><a class="btn btn-ghost" href="shop.html">Browse the Shop</a></div></div>', noindex=True)
 
 # ---------- sitemap + robots ----------
